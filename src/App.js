@@ -16,22 +16,39 @@ function App() {
   useEffect(_getTasks, []);
 
   return (
-    <div className="App">
+    <div className="App container">
+      <div className="row justify-content-md-center">
+    <div className="col-6" >
       <h1>Taskmaster</h1>
       <h2>Number of tasks: {tasks.length}</h2>
-      <ul>
-        {tasks.map( (task,idx) => {
-          return(
-            <li key={task.id}>
-              <h3>{task.title}</h3>
-              <p>Description: {task.description}</p>
-              <p>Assigned to: {task.assignee}</p>
-              <History history={task.history} />
-            </li>
-          )
-        })}
 
-      </ul>
+      <div className="accordion" id="accordionExample">
+      {tasks.map( (task,idx) => {
+          return(
+
+            <div className="card" key={task.id}>
+              <div className="card-header" id={task.id}>
+                <h2 className="mb-0">
+                  <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target={"#"+task.id+1} aria-expanded="false" aria-controls={task.id+1}>
+                  {task.title}
+                  </button>
+                </h2>
+              </div>
+
+              <div id={task.id+1} className="collapse show" aria-labelledby={task.id} data-parent="#accordionExample">
+                <div className="card-body">
+                  <p>Description: {task.description}</p>
+                  <p>Assigned to: {task.assignee}</p>
+                  <History history={task.history} />
+                </div>
+              </div>
+            </div>
+
+        )
+      })}
+      </div>
+      </div>
+      </div>
     </div>
   );
 }
