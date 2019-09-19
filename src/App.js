@@ -5,9 +5,13 @@ let form = new FormData();
 
 function App() {
 
-const API = 'http://taskmaster2-dev.us-west-2.elasticbeanstalk.com/tasks';
+//const API = 'http://TaskmasterJane-env.eiqxpq93um.us-west-2.elasticbeanstalk.com//tasks';
 
 //const API = 'http://localhost:5000/tasks';
+
+// const API = 'https://kd0e6nsrr6.execute-api.us-west-2.amazonaws.com/dev/tasks';
+
+const API = 'https://kd0e6nsrr6.execute-api.us-west-2.amazonaws.com/dev/tasks';
 
 function _handleChange(event) {
   let value = event.target.files ? event.target.files[0] : event.target.value;
@@ -23,7 +27,7 @@ function _upload(event) {
   })
   .then(response => response.json())
   .catch(error => console.error('Error:', error))
-  .then(response => window.location.reload());
+  .then(response => console.log(response));
   
 }
 
@@ -33,8 +37,11 @@ function _upload(event) {
     fetch(API)
       .then(data => data.json())
       .then(
-        function(fetchedTasks) {setTasks(fetchedTasks);}
-        );
+        function(fetchedTasks) {
+          console.log(fetchedTasks);
+          setTasks(fetchedTasks);
+        })
+        .catch(console.error)
   }
 
   useEffect(_getTasks, []);
@@ -106,10 +113,10 @@ function _upload(event) {
 
 function History(props){
 
-  if (props.history!==null) {
+  if (props.history) {
     return(
       Object.keys(props.history).map(function(key) {
-        return <span key={key}>{key}: {props.history[key]}</span>;
+        return <p key={key}>{key}: {props.history[key]}</p>;
       }) 
     )
   } else {
