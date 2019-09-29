@@ -57,6 +57,25 @@ function App() {
         });
   }
 
+  function _handleSubscribe(event) {
+    event.preventDefault();
+    fetch("https://kd0e6nsrr6.execute-api.us-west-2.amazonaws.com/dev/subscribe", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors',
+      body: JSON.stringify(formData),
+
+    })
+      .then(response => response.json())
+      .catch(error => console.error('Error: ', error))
+      //.then(response => console.log('Success: ', response))
+      .then(
+        function (response) {
+          //console.log('Success: ', response)
+          document.getElementById('subscribe').reset();
+        });
+  }
+
   const [tasks, setTasks] = useState([]);
 
   function _getTasks() {
@@ -100,6 +119,7 @@ function App() {
               </form>
             </div>
           </div>
+
         </div>
 
 
@@ -139,6 +159,21 @@ function App() {
 
         {/* Routes */}
         <div className="col-sm-4">
+
+
+        <div className="card">
+          <div className="card-header bg-warning"><strong>Subscribe</strong></div>
+            <div className="card-body">
+            <form onSubmit={_handleSubscribe} id="subscribe">
+                <div className="form-group">
+                  <label htmlFor="title">Email or phone number</label>
+                  <input onChange={_handleChange} className="form-control" id="subscribe" name="subscribe" required />
+                </div>
+                <button type="submit" className="btn btn-warning">Subscribe</button>
+              </form>
+          </div>
+        </div>
+
           <div className="card">
             <div className="card-header bg-info text-white"><strong>Routes for testing</strong></div>
             <div className="card-body">
